@@ -1,0 +1,60 @@
+body{
+  position: absolute;
+  background-image: url("stars.jpg");
+  background-attachment: fixed;
+  background-color: gray;
+}
+
+main{
+  border:1px solid gray;
+  border-radius: 15px;
+  position:relative;
+  background-color: ivory;
+  width:950px;
+  left:180px;
+  right: 180px;
+}
+
+.container h1{
+  clear: left;
+  margin-left:150px;
+  font-family: fantasy;
+  color: gold;
+}
+
+#mainList{
+  margin-top: 10px;
+  margin-left: 10px;
+  border:1px solid white;
+  padding: 2px;
+}
+
+.addForm{
+  margin-right: 20px;
+  margin-top: 20px;
+  border:1px solid white;
+  padding: 2px;
+  float: right;
+}
+
+
+.demo-list-action {
+width: 300px;
+}
+
+#button1{
+  background-color: gray;
+}
+
+.material-icons{
+  color: gold;
+}
+
+.material-icons:hover{
+  cursor:pointer;
+}
+
+
+.mdl-list__item-avatar:hover{
+  cursor: default;
+}

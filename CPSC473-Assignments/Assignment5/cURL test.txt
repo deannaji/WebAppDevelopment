@@ -1,0 +1,8 @@
+Testing POST request using cURL:
+$ curl --silent --request POST \  --header 'Content-Type: application/json' \  
+       --data '{ "call": "head" }'  \  'http://localhost:3000/flip' | python -m json.tool
+
+
+Testing GET request using cURL:
+$ curl --silent --request GET \  --header 'Content-Type: application/json'  \  
+       'http://localhost:3000/stats' | python -m json.tool
