@@ -66,6 +66,23 @@ div.posts-container{
   padding: 10px;
 }
 
+.single-post-containe{
+  display: inline-table;
+}
+.up-img{
+  display: inline-flex;
+}
+.single-post{
+width: 70%;
+display: inline-table;
+overflow: hidden;
+}
+
+
+#arrowUp{
+  height: 1em;
+  width: 1em;
+}
 
 div.footer-container{
   padding: 10px;

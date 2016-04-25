@@ -1,8 +1,10 @@
 <!doctype html>
-<html>
+<html ng-app="myApp">
 <head>
   <title>Skimmed Hacker News</title>
   <link rel="stylesheet" href="style/style.css" type="text/css">
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="javascript/controllers.js"></script>
 </head>
 
 <body>
@@ -30,9 +32,28 @@
 
   <main>
     <div class="main-container">
-       <div class="posts-container">
-           <p>Posts are here:</p>
-           <p>1. The title of the first post..</p>
+       <div class="posts-container" ng-controller="MyController">
+         <ol class="posts-list">
+            <li class="post-item" ng-repeat="item in posts">
+               <div class="single-post-container">
+
+                 <div class="up-img"><img id="arrowUp" src="style/arrow-up.ico"></div>
+
+                 <div class="single-post">
+                   <a id ="title" href="{{item.main_link}}">{{item.link_title}}</a><br>
+                   <span>{{item.likes}}</span>
+                   <span> points</span>
+                   <span> by </span>
+                   <span>{{item.username}}</span>
+                   <span>, posted on </span>
+                   <span>{{item.post_time}}</span>
+                 </div>
+
+               </div>
+                 <br>
+            </li>
+         </ol>
+
        </div>
     </div>
   </main>
