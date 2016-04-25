@@ -9,11 +9,10 @@ var express = require("express"),
     http = require("http").createServer(app),
     io = require("socket.io")(http); //requiring socket.io
 
-//Connection event handler:
+//User connection event handler:
 io.on("connection", function(socket) {
     "use strict";
     console.log("user connected");
-
     //Socket comming from a connected user:
     socket.on("user post", function(post) {
         //sending the socket to all connected users, except the first sender:

@@ -19,31 +19,36 @@ var main = function(toDoObjects) {
 
     //sockets back from the server:
     socket.on("user post", function() {
-        console.log("A socket is back form the server:");
         alert("Hey, A post has been added!");
-
+        //updating the data to get the new todo:
         $.getJSON("todos.json", function(newToDoObjects) {
             toDoObjects = newToDoObjects;
             toDos = newToDoObjects.map(function(toDo) {
                 return toDo.description;
             });
 
-            var $li = $("<li>").text(toDos[toDos.length - 1]);
+            var $li = $("<li>").text(toDos[toDos.length - 1]);//the new todo description
+            $li.css("display","none");
             var newObj = toDoObjects[toDoObjects.length - 1];
-            var $tag = $("<h3>").text(newObj.tags[0]);
-            console.log(newObj.tags[0]);
+            var $tag = $("<h3>").text(newObj.tags[0]);//the new todo tag
+            $tag.css("display","none");
 
+            //this portion of code is to get what tag is active and append the new todo, without any user's interaction:
             $(".tabs a span").toArray().forEach(function(element) {
                 var $element = $(element);
                 if ($element.hasClass("active")) {
+                    //if the newest tab is active:
                     if ($element.parent().is(":nth-child(1)")) {
-                        console.log("this is tab 1");
                         $(".content ul").prepend($li);
+                        $li.slideDown("slow");
+                    //if the oldest tab is active:
                     } else if ($element.parent().is(":nth-child(2)")) {
-                        console.log("this is tab 2");
                         $(".content ul").append($li);
+                        $li.slideDown("slow");
+                    //if its the tags tab is active:
                     } else if ($element.parent().is(":nth-child(3)")) {
                         var found = 0;
+                        //find if the tag is already there, or its a new tag along with discription:
                         $(".content h3").toArray().forEach(function(hTag) {
                             var $hTag = $(hTag);
                             if ($hTag.text() === newObj.tags[0]) {
@@ -53,22 +58,25 @@ var main = function(toDoObjects) {
                             }
                         });
                         if (found === 0) {
-                            console.log("the tag is new");
+                            //if the tag is new:
                             $(".content").append($tag);
+                            $tag.slideDown("slow");
                             $(".content").append($li);
+                            $li.slideDown("slow");
                         } else {
-                            console.log("the tag is already there");
+                            //if the tag is already there:
                             var str = "<h3>" + newObj.tags[0] + "</h3>";
                             $li.after(str);
                             $(".content").append($li);
+                            $li.slideDown("slow");
                         }
                     }
 
                 }
             });
 
-        }); //end of getJSON
-    });
+        }); //end of getJSON.
+    });//end of socket comming back from the server event.
 
 
 
@@ -81,7 +89,6 @@ var main = function(toDoObjects) {
                 $input,
                 $button,
                 i;
-            console.log(toDos);
             $(".tabs a span").removeClass("active");
             $element.addClass("active");
             $("main .content").empty();
@@ -107,7 +114,6 @@ var main = function(toDoObjects) {
                         }
                     });
                 });
-                //console.log(tags);
 
                 var tagObjects = tags.map(function(tag) {
                     var toDosWithTag = [];
@@ -124,7 +130,6 @@ var main = function(toDoObjects) {
                     };
                 });
 
-                //console.log(tagObjects);
 
                 tagObjects.forEach(function(tag) {
                     var $tagName = $("<h3>").text(tag.name),
@@ -156,19 +161,10 @@ var main = function(toDoObjects) {
                         };
 
                     //Socket Emit to server:
-                    //socket.emit("user post",newToDo);
                     socket.emit("user post", "Todos list updated!");
-                    console.log("the new todo socket: ");
-                    //console.log(newToDo);
 
                     $.post("todos", newToDo, function(result) {
-                        //console.log(result);
-
-                        //toDoObjects.push(newToDo);
                         toDoObjects = result;
-                        //console.log("result: ");
-                        //console.log(toDoObjects);
-
                         // update toDos
                         toDos = toDoObjects.map(function(toDo) {
                             return toDo.description;
