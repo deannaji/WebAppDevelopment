@@ -1,75 +1,107 @@
 <!doctype html>
-<html ng-app="myApp">
-<head>
-  <title>Skimmed Hacker News</title>
-  <link rel="stylesheet" href="style/style.css" type="text/css">
-  <script src="lib/angular/angular.min.js"></script>
-  <script src="javascript/controllers.js"></script>
-</head>
-
-<body>
-<div class="body-container">
-  <header>
-    <div class="header-container">
-       <div class="title-container">
-          <span id="siteTitle">Skimmed Hacker News</span>
-          <span class="menu-container">
-          <a href="#">Newest</a>
-          <span class="seperator">|</span>
-          <a href="#">Oldest</a>
-          <span class="seperator">|</span>
-          <a href="#">Submit</a>
-        </span>
-       </div>
-
-
-       <div class="login-container">
-         <a href="#">Login</a>
-       </div>
-
-    </div>
-  </header>
-
-  <main>
-    <div class="main-container">
-       <div class="posts-container" ng-controller="MyController">
-         <ol class="posts-list">
-            <li class="post-item" ng-repeat="item in posts">
-               <div class="single-post-container">
-
-                 <div class="up-img"><img id="arrowUp" src="style/arrow-up.ico"></div>
-
-                 <div class="single-post">
-                   <a id ="title" href="{{item.main_link}}">{{item.link_title}}</a><br>
-                   <span>{{item.likes}}</span>
-                   <span> points</span>
-                   <span> by </span>
-                   <span>{{item.username}}</span>
-                   <span>, posted on </span>
-                   <span>{{item.post_time}}</span>
-                 </div>
-
-               </div>
-                 <br>
-            </li>
-         </ol>
-
-       </div>
-    </div>
-  </main>
-
-  <footer>
-    <hr id="dividor">
-    <div class="footer-container">
-      <p>Copyright: Dean Naji</p>
-      <p>Computer Sciense 473</p>
-      <p>CSUF</p>
-      <br>
-      <label>Search: </label>
-      <input type="text">
-    </div>
-  </footer>
-</div>
-</body>
-
-</html>
+ 2 <html ng-app="myApp">
+ 3 <head>
+ 4   <title>Skimmed Hacker News</title>
+ 5   <link rel="stylesheet" href="styles/style.css" type="text/css">
+ 6   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+ 7   <script src="lib/angular.min.js"></script>
+ 8   <script src="js/controllers.js"></script>
+ 9 </head>
+10
+11 <body>
+12 <div class="body-container" ng-controller="MyController" >
+13   <header>
+14     <div class="header-container">
+15        <div class="title-container">
+16           <span id="siteTitle">Skimmed Hacker News</span>
+17           <span class="menu-container">
+18              <a id="newest" href="" ng-click="showNewest()">Newest</a>
+19              <span class="seperator">|</span>
+20              <a id="oldest" href="" ng-click="showOldest()">Oldest</a>
+21              <span class="seperator">|</span>
+22              <a href="" ng-click="submitPost()">Submit</a>
+23           </span>
+24        </div>
+25
+26
+27        <div class="login-container">
+28            <span id="userWelcome">Welcome, <span>{{username}}</span> </span>
+29          <a id="loginLink" href="" ng-click="loginArea()">Login</a>
+30          <a id="logoutLink" href="" ng-click="logout()">Logout</a>
+31        </div>
+32
+33     </div>
+34   </header>
+35
+36   <main>
+37     <div class="main-container">
+38         <div class="submit-container">
+39             <h2>Submit a post</h2><br>
+40             <div class="submit-form">
+41                 <label>Title:</label><br>
+42                 <input id="link_title" type="text"><br><br>
+43                 <label>URL Link:</label><br>
+44                 <input id="main_link" type="text"><br><br>
+45                 <input type="submit" ng-click="submit()">
+46                 <button ng-click="showHome()">Cancel</button><br>
+47             </div>
+48         </div>
+49         <div class="register-container">
+50             <h2>Login</h2><br>
+51             <div class="login-form">
+52                  <label>User Name:</label><br>
+53                  <input id="logUsername" type="text"><br><br>
+54                  <label>Password:</label><br>
+55                  <input id="logPassword" type="password"><br><br>
+56                  <button ng-click="login()">login</button>
+57             </div><br>
+58             <h2> Register</h2><br>
+59             <div class="register-form">
+60                   <label>User Name:</label><br>
+61                   <input id="regUsername" type="text"><br><br>
+62                   <label>Password:</label><br>
+63                   <input id="regPassword" type="password"><br><br>
+64                   <button ng-click="register()">Register</button>
+65             </div><br>
+66         </div>
+67        <div class="posts-container">
+68          <ol class="posts-list">
+69             <li class="post-item" ng-repeat="item in posts">
+70             <div data-ng-init="postId=item.id" class="single-post-container">
+71
+72                 <div class="up-img"><a data-ng-attr-id="postId" href="" data-ng-click="likesUp(postId)">^</a></div>
+73
+74                  <div class="single-post">
+75                    <a id ="title" href="{{item.main_link}}">{{item.link_title}}</a><br>
+76                    <span>{{item.likes}}</span>
+77                    <span> points</span>
+78                    <span> by </span>
+79                    <span>{{item.username}}</span>
+80                    <span>, posted on </span>
+81                    <span>{{item.createdAt}}</span>
+82                  </div>
+83
+84                </div>
+<br>
+86             </li>
+87          </ol>
+88
+89        </div>
+90     </div>
+91   </main>
+92
+93   <footer>
+94     <hr id="dividor">
+95     <div class="footer-container">
+96       <p>Copyright: Dean Naji</p>
+97       <p>Computer Sciense 473</p>
+98       <p>CSUF</p>
+99       <br>
+100       <label>Search: </label>
+101       <input type="text">
+102     </div>
+103   </footer>
+104 </div>
+105 </body>
+106
+107 </html>
