@@ -4,6 +4,8 @@
 // Client-side code
 /* jshint browser: true, jquery: true, curly: true, eqeqeq: true, forin: true, immed: true, indent: 4, latedef: true, newcap: true, nonew: true, quotmark: double, undef: true, unused: true, strict: true, trailing: true */
 /*globals angular*/
+
+//timeSince function is taken from Project1
 function timeSince(date) {
     "use strict";
     var seconds = Math.floor((new Date() - date) / 1000);
@@ -40,7 +42,7 @@ myApp.controller("MyController", function($scope, $http) {
         userPassword,
         userLikes = [],
         sessionUser = sessionStorage.getItem("username");
-    console.log(sessionUser);
+    //Checking if there is session values:
     if (sessionUser === null) {
         $scope.username = "";
         $("#logoutLink").hide();
@@ -48,7 +50,7 @@ myApp.controller("MyController", function($scope, $http) {
         $("#loginLink").show();
         $(".submit-container").hide();
         $(".register-container").hide();
-    } else if (sessionUser !== null) {
+    } else if (sessionUser !== null) { //if there is session values:
         $("#loginLink").hide();
         $("#userWelcome").show();
         $("#loginLink").hide();
@@ -56,17 +58,16 @@ myApp.controller("MyController", function($scope, $http) {
         $(".register-container").hide();
         $scope.username = sessionUser;
         userId = sessionStorage.getItem("userId");
+        //populating the user liked posts array, from the session data:
         var csString = sessionStorage.getItem("userLikes");
         var x = csString.replace(/^,|,$/g, "");
         var stArray = x.split(",");
-        console.log(stArray);
         for (var i = 0; i <= stArray.length - 1; i++) {
             userLikes[i] = parseInt(stArray[i]);
         }
-        console.log(userLikes);
     }
 
-
+    //initial GET req.:
     $http.get("http://localhost:3000/posts").success(function(data) {
         //the module:
         data.forEach(function(element) {
@@ -76,7 +77,7 @@ myApp.controller("MyController", function($scope, $http) {
         $scope.posts = data.reverse();
     });
 
-    //operations:
+    //Operations:
     $scope.showNewest = function() {
         if (order === "oldest") {
             $scope.posts.reverse();
@@ -91,6 +92,7 @@ myApp.controller("MyController", function($scope, $http) {
         }
     };
 
+    //Show posts area:
     $scope.submitPost = function() {
         if ($scope.username !== "") {
             $(".submit-container").show();
@@ -102,6 +104,7 @@ myApp.controller("MyController", function($scope, $http) {
         }
     };
 
+    //Show Home:
     $scope.showHome = function() {
         $(".submit-container").hide();
         $(".register-container").hide();
@@ -110,6 +113,7 @@ myApp.controller("MyController", function($scope, $http) {
 
     };
 
+    //Submit a new post:
     $scope.submit = function() {
         var title = $("#link_title").val(),
             url = $("#main_link").val(),
@@ -117,7 +121,6 @@ myApp.controller("MyController", function($scope, $http) {
             d = new Date(),
             date = d.toString();
         var likes = 0;
-        console.log(date);
         var newPost = {
             "id": id,
             "link_title": title,
@@ -130,8 +133,6 @@ myApp.controller("MyController", function($scope, $http) {
             method: "POST",
             url: "http://localhost:3000/posts",
             data: newPost
-        }).success(function(res) {
-            console.log(res);
         });
 
         $("#link_title").val("");
@@ -139,17 +140,15 @@ myApp.controller("MyController", function($scope, $http) {
 
         //push to the begining:
         $scope.posts.unshift(newPost);
-        console.log($scope.posts);
         $scope.showHome();
     };
 
-
+    //Increasing likes:
     $scope.likesUp = function(postID) {
         if ($scope.username !== "") {
             if (userLikes.indexOf(postID) < 0) {
-
                 var main_link, link_title, id, username, likes, createdAt;
-                console.log(postID);
+                //grabing the clicked element's ID:
                 $scope.posts.forEach(function(element) {
                     if (element.id === postID) {
                         main_link = element.main_link;
@@ -178,9 +177,7 @@ myApp.controller("MyController", function($scope, $http) {
                     }
 
                 }).success(function(res) {
-                    console.log(res);
                 });
-                console.log(userId);
                 var url2 = "http://localhost:3000/users/" + userId;
                 $http({
                     method: "PUT",
@@ -195,7 +192,7 @@ myApp.controller("MyController", function($scope, $http) {
         }
     };
 
-
+    //Show login area:
     $scope.loginArea = function() {
         $(".posts-container").hide();
         $(".submit-container").hide();
@@ -203,14 +200,14 @@ myApp.controller("MyController", function($scope, $http) {
         $(".register-container").show();
     };
 
-
+    //Register new user:
     $scope.register = function() {
         var user = $("#regUsername").val(),
             pass = $("#regPassword").val(),
             likedPosts = [];
         $scope.usersCount = 0;
         if ($("#regUsername").val() === "" && $("#regPassword").val() === "") {
-            console.log("username/password boxes are empty!");
+            alert("Please, fill the requiered fields..");
             return;
         } else if ($("#regUsername").val() !== "" && $("#regPassword").val() !== "") {
             $http({
@@ -249,7 +246,6 @@ myApp.controller("MyController", function($scope, $http) {
                     }).success(function(res) {
                         $scope.usersCount = res[0].usersCount;
                         $scope.usersCount++;
-                        console.log($scope.usersCount);
                         $http({
                             method: "PUT",
                             url: "http://localhost:3000/user/1",
@@ -278,15 +274,15 @@ myApp.controller("MyController", function($scope, $http) {
         $("#regPassword").val("");
     };
 
-
+   //login function:
     $scope.login = function() {
         var user = $("#logUsername").val(),
             pass = $("#logPassword").val();
+        //if the text box are empty or not:
         if ($("#logUsername").val() === "" && $("#logPassword").val() === "") {
-            console.log("username/password boxes are empty!");
+            alert("Please, fill the requiered fields..");
             return;
         } else if ($("#logUsername").val() !== "" && $("#logPassword").val() !== "") {
-            console.log("I got username/password valuse successfully..");
             $http({
                 method: "GET",
                 params: {
@@ -302,9 +298,9 @@ myApp.controller("MyController", function($scope, $http) {
                     userId = res[0].id;
                     userPassword = res[0].password;
                     userLikes = res[0].likes;
+
+                    //populating session values with user identification data:
                     $scope.username = user;
-                    console.log(userLikes);
-                    console.log(res);
                     sessionStorage.setItem("username", user);
                     sessionStorage.setItem("userLikes", userLikes);
                     sessionStorage.setItem("userId", userId);
@@ -320,6 +316,7 @@ myApp.controller("MyController", function($scope, $http) {
         }
     };
 
+    //logout function:
     $scope.logout = function() {
         $("#logoutLink").hide();
         $("#userWelcome").hide();

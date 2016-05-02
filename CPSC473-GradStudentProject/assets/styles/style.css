@@ -53,9 +53,9 @@ div.header-container{
   font-weight:900;
 }
 div.title-container{
-padding-left: 10px;
-padding-bottom: 10px;
- float: left;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  float: left;
 }
 
 span.menu-container{
@@ -64,17 +64,17 @@ span.menu-container{
 
 div.login-container{
   padding-right: 10px;
- padding-bottom: 10px;
+  padding-bottom: 10px;
   float: right;
 }
 
 div.main-container{
- padding-top: 10px;
- font-family:"Droid Sans";
+  padding-top: 10px;
+  font-family:"Droid Sans";
 }
 
 #title{
-   text-decoration:none !important;
+   text-decoration:none;
 }
 
 #subtitle{
@@ -99,12 +99,16 @@ div.posts-container{
 }
 .up-img{
   display: inline-flex;
+  text-decoration:none;
+}
+.single-post a{
+  text-decoration:none;
 }
 
 .single-post{
-width: 70%;
-display: inline-table;
-overflow: hidden;
+  width: 70%;
+  display: inline-table;
+  overflow: hidden;
 }
 
 
@@ -117,4 +121,3 @@ div.footer-container{
   padding: 10px;
   font-family: "Ubuntu";
 }
-
