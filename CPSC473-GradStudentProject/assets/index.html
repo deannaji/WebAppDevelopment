@@ -1,112 +1,112 @@
 <!doctype html>
 <html ng-app="myApp">
+
 <head>
-  <title>Skimmed Hacker News</title>
-  <link rel="stylesheet" href="styles/style.css" type="text/css">
-  <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script src="lib/angular.min.js"></script> 
-  <script src="js/controllers.js"></script>
+    <title>Skimmed Hacker News</title>
+    <link rel="stylesheet" href="styles/style.css" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="js/controllers.js"></script>
 </head>
 
 <body>
-<div class="body-container" ng-controller="MyController" >
-  <header>
-    <div class="header-container">
-       <div class="title-container">
-          <span id="siteTitle">Skimmed Hacker News</span>
-          <span class="menu-container">
+    <div class="body-container" ng-controller="MyController">
+        <header>
+            <div class="header-container">
+                <div class="title-container">
+                    <span id="siteTitle">Skimmed Hacker News</span>
+                    <span class="menu-container">
              <a id="newest" ng-click="showNewest()">Newest</a>
              <span class="seperator">|</span>
-             <a id="oldest" ng-click="showOldest()">Oldest</a>
-             <span class="seperator">|</span>
-             <a ng-click="submitPost()">Submit</a>
-          </span>
-       </div>
+                    <a id="oldest" ng-click="showOldest()">Oldest</a>
+                    <span class="seperator">|</span>
+                    <a ng-click="submitPost()">Submit</a>
+                    </span>
+                </div>
 
 
-       <div class="login-container">
-           <span id="userWelcome">Welcome, <span>{{username}}</span> </span>  
-         <a id="loginLink"  ng-click="loginArea()">Login</a>
-         <a id="logoutLink" ng-click="logout()">Logout</a>
-       </div>
+                <div class="login-container">
+                    <span id="userWelcome">Welcome, <span>{{username}}</span> </span>
+                    <a id="loginLink" ng-click="loginArea()">Login</a>
+                    <a id="logoutLink" ng-click="logout()">Logout</a>
+                </div>
 
+            </div>
+        </header>
+
+        <main>
+            <div class="main-container">
+                <div class="submit-container">
+                    <h2>Submit a post</h2><br>
+                    <div class="submit-form">
+                        <label>Title:</label><br>
+                        <input id="link_title" type="text"><br><br>
+                        <label>URL Link:</label><br>
+                        <input id="main_link" type="text"><br><br>
+                        <input type="submit" ng-click="submit()">
+                        <button ng-click="showHome()">Cancel</button><br>
+                    </div>
+                </div>
+                <div class="register-container">
+                    <h2>Login</h2><br>
+                    <div class="login-form">
+                        <label>User Name:</label><br>
+                        <input id="logUsername" type="text"><br><br>
+                        <label>Password:</label><br>
+                        <input id="logPassword" type="password"><br><br>
+                        <button ng-click="login()">login</button>
+                    </div><br>
+                    <h2> Register</h2><br>
+                    <div class="register-form">
+                        <label>User Name:</label><br>
+                        <input id="regUsername" type="text"><br><br>
+                        <label>Password:</label><br>
+                        <input id="regPassword" type="password"><br><br>
+                        <button ng-click="register()">Register</button>
+                    </div><br>
+                </div>
+                <div class="posts-container">
+                    <ol class="posts-list">
+                        <li class="post-item" ng-repeat="item in posts | filter: query">
+                            <div data-ng-init="postId=item.id" class="single-post-container">
+
+                                <div class="up-img"><a data-ng-attr-id="postId" href="" data-ng-click="likesUp(postId)">^</a></div>
+
+                                <div class="single-post">
+                                    <a id="title" href="{{item.main_link}}">{{item.link_title}}</a><br>
+                                    <div id="subtitle">
+                                        <span>{{item.likes}}</span>
+                                        <span> points</span>
+                                        <span> by </span>
+                                        <span>{{item.username}}</span>
+                                        <span>, posted on </span>
+                                        <span>{{item.postDate}}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br>
+                        </li>
+                    </ol>
+
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <hr id="dividor">
+            <div class="footer-container">
+                <p>Created by: Dean Naji</p>
+                <p>Computer Sciense 473</p>
+                <p>CSUF</p>
+                <br>
+                <label>Search: </label>
+                <input ng-model="query" type="text">
+            </div>
+        </footer>
     </div>
-  </header>
-
-  <main>
-    <div class="main-container">
-        <div class="submit-container">
-            <h2>Submit a post</h2><br>
-            <div class="submit-form">
-                <label>Title:</label><br>
-                <input id="link_title" type="text"><br><br>
-                <label>URL Link:</label><br>
-                <input id="main_link" type="text"><br><br>
-                <input type="submit" ng-click="submit()">
-                <button ng-click="showHome()">Cancel</button><br>
-            </div>    
-        </div>
-        <div class="register-container">
-            <h2>Login</h2><br>
-            <div class="login-form">
-                 <label>User Name:</label><br>
-                 <input id="logUsername" type="text"><br><br>
-                 <label>Password:</label><br>
-                 <input id="logPassword" type="password"><br><br>
-                 <button ng-click="login()">login</button>
-            </div><br>
-            <h2> Register</h2><br>
-            <div class="register-form">
-                  <label>User Name:</label><br>
-                  <input id="regUsername" type="text"><br><br>
-                  <label>Password:</label><br>
-                  <input id="regPassword" type="password"><br><br>
-                  <button ng-click="register()">Register</button>
-            </div><br>    
-        </div>    
-       <div class="posts-container">
-         <ol class="posts-list">
-            <li class="post-item" ng-repeat="item in posts | filter: query">
-            <div data-ng-init="postId=item.id" class="single-post-container">
-
-                <div class="up-img"><a data-ng-attr-id="postId" href="" data-ng-click="likesUp(postId)">^</a></div>
-
-                 <div class="single-post">
-                   <a id ="title" href="{{item.main_link}}">{{item.link_title}}</a><br>
-                   <div id="subtitle">  
-                     <span>{{item.likes}}</span>
-                     <span> points</span>
-                     <span> by </span>
-                     <span>{{item.username}}</span>
-                     <span>, posted on </span>
-                     <span>{{item.postDate}}</span>
-                   </div>
-                 </div>
-
-               </div>
-                 <br>
-            </li>
-         </ol>
-
-       </div>
-    </div>
-  </main>
-
-  <footer>
-    <hr id="dividor">
-    <div class="footer-container">
-      <p>Copyright: Dean Naji</p>
-      <p>Computer Sciense 473</p>
-      <p>CSUF</p>
-      <br>
-      <label>Search: </label>
-      <input ng-model="query" type="text">
-    </div>
-  </footer>
-</div>
 </body>
 
 </html>
-
