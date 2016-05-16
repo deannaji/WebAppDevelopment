@@ -29,9 +29,25 @@
           <a href=""><span data-bind="click: add">Add</span></a>
         </div>
         <div class="content">
-          <ul data-bind="if: tab1tab2, foreach: todosArray">
+
+          <ul data-bind=" foreach: todosArray">
             <li data-bind="text: description"></li>
           </ul>
+
+          <ul data-bind="foreach: tagsArray">
+              <h3 data-bind="text: name"></h3>
+              <ul data-bind="foreach: toDos">
+                 <li data-bind="text: $data"></li>
+              </ul>
+          </ul>
+
+          <div data-bind="visible: showAdding">
+            <p>Description: </p>
+            <input data-bind="value: descriptionBox">
+            <p>Tags: </p>
+            <input  data-bind="value: tagsBox"></input>
+            <span data-bind="click: addNewTodo">+</span>
+          </div>
 
         </div>
       </div>

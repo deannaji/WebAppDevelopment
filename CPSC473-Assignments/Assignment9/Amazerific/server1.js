@@ -28,7 +28,7 @@ var ToDoSchema = mongoose.Schema({
 });
 
 var ToDo = mongoose.model("ToDo", ToDoSchema);
-app.get("/todos.json", function(req, res) {
+app.get("/todos", function(req, res) {
     "use strict";
     ToDo.find({}, function(err, toDos) {
         res.json(toDos);
