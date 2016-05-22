@@ -16,16 +16,17 @@ var main = function() {
     $("#loginTopNav").show();
 
     $.get("http://localhost:3000/reddit", function(getData) {
+        console.log(getData);
        $("div.postsContainer").empty();
 			 getData.forEach(function(reddit) {
 				var imgId = reddit.id;
                 var postsList = "<div class ='postContent z-depth-1'>" +
                     "<div class = 'votes'>" +
-                    "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
-                    "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
+                    "<img  id=" + imgId + " class='voteUpButton' src='styles/images/up.png'>" +
+                    "<img  id=" + imgId + " class='voteUpButtonDisabled' src='styles/images/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
                     "<strong id =" + reddit.id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
-                    "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
-                    "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
+                    "<img  id=" + imgId + " class='voteDownButton' src='styles/images/down.png'>" +
+                    "<img  id=" + imgId + " class='voteDownButtonDisabled' src='styles/images/downDisabled.png' style='opacity:0.4; display: none;'>" +
                     "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
                     "<img autoplay='false' src=" + JSON.stringify(reddit.image_link) + "width='70' height='60' class='postimage'>" + "</a>" + "</div>" +
                     "<div class='Content-List'>" +
@@ -38,7 +39,7 @@ var main = function() {
                 $(postsList).appendTo('div.postsContainer');
                 //$("#" + reddit.id + ".votesNum").text(reddit.likes);
 
-                if (reddit.image_link != "image/noimage.jpg") {
+                if (reddit.image_link != "styles/images/noimage.jpg") {
                     // alert(reddit.id);
                     $("#" + reddit.id + ".imageDivLink").html("<i class='material-icons thumbdown'>play_circle_filled</i>");
                 }
@@ -126,10 +127,10 @@ var main = function() {
                               console.log(this.id);
                               $.ajax({
                                   type: "PUT",
-                                  url: "http://localhost:3000/users/" + user.id,
+                                  url: "http://localhost:3000/users/",
                                   data: {
                                       "id": user.id,
-                                      "name": user.userName,
+                                      "name": username,
                                       "password": pwd,
                                       "likes": dt1,
                                       "notLikes": dt2,
@@ -154,7 +155,7 @@ var main = function() {
                                   console.log("like"+like);
                               $.ajax({
                                   type: "PUT",
-                                  url: "http://localhost:3000/users/" + user.id,
+                                  url: "http://localhost:3000/users/",
                                   data: {
                                       "id": user.id,
                                       "name": user.userName,
@@ -184,7 +185,7 @@ var main = function() {
                          console.log(postingUser);
                          $.ajax({
                               type: "PUT",
-                              url: "http://localhost:3000/reddit/" + $imgId,
+                              url: "http://localhost:3000/reddit/",
                               data: {
                                   "id": $imgId,
                                   "image_link": image_link,
@@ -271,8 +272,8 @@ var main = function() {
                       post_time= getData[this.id - 1].post_time;
                       postingUser= getData[this.id - 1].username;
                       $.ajax({
-                          type: "PUT",
-                          url: "http://localhost:3000/reddit/" + $imgId,
+                          type: "POST",
+                          url: "http://localhost:3000/reddit/",
                           data: {
                               "id": $imgId,
                               "image_link": image_link,
@@ -280,8 +281,8 @@ var main = function() {
                               "link_title": link_title,
                               "main_link": main_link,
                               "post": "submitted",
-  							"post_time" : post_time,
-  							"username": postingUser
+  			      "post_time" : post_time,
+  			      "username": postingUser
 
                           }
                       });
@@ -310,11 +311,11 @@ $(".button-collapse").sideNav();
                 var imgId = reddit.id;
                var postsList = "<div class ='postContent z-depth-1'>" +
                      "<div class = 'votes'>" +
-                     "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
-                     "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
+                     "<img  id=" + imgId + " class='voteUpButton' src='styles/images/up.png'>" +
+                     "<img  id=" + imgId + " class='voteUpButtonDisabled' src='styles/images/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
                      "<strong id =" + reddit.id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
-                     "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
-                     "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
+                     "<img  id=" + imgId + " class='voteDownButton' src='styles/images/down.png'>" +
+                     "<img  id=" + imgId + " class='voteDownButtonDisabled' src='styles/images/downDisabled.png' style='opacity:0.4; display: none;'>" +
                      "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
                      "<img autoplay='false' src=" + JSON.stringify(reddit.image_link) + "width='70' height='60' class='postimage'>" + "</a>" + "</div>" +
                      "<div class='Content-List'>" +
@@ -348,11 +349,11 @@ $(".button-collapse").sideNav();
                var imgId = reddit.id;
              var postsList = "<div class ='postContent z-depth-1'>" +
                   "<div class = 'votes'>" +
-                  "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
-                  "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
+                  "<img  id=" + imgId + " class='voteUpButton' src='styles/images/up.png'>" +
+                  "<img  id=" + imgId + " class='voteUpButtonDisabled' src='styles/images/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
                   "<strong id =" + reddit.id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
-                  "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
-                  "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
+                  "<img  id=" + imgId + " class='voteDownButton' src='styles/images/down.png'>" +
+                  "<img  id=" + imgId + " class='voteDownButtonDisabled' src='styles/images/downDisabled.png' style='opacity:0.4; display: none;'>" +
                   "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
                   "<img autoplay='false' src=" + JSON.stringify(reddit.image_link) + "width='70' height='60' class='postimage'>" + "</a>" + "</div>" +
                   "<div class='Content-List'>" +
@@ -389,11 +390,11 @@ $(".button-collapse").sideNav();
                 var imgId = reddit.id;
              var postsList = "<div class ='postContent z-depth-1'>" +
                    "<div class = 'votes'>" +
-                   "<img  id=" + imgId + " class='voteUpButton' src='image/up.png'>" +
-                   "<img  id=" + imgId + " class='voteUpButtonDisabled' src='image/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
+                   "<img  id=" + imgId + " class='voteUpButton' src='styles/images/up.png'>" +
+                   "<img  id=" + imgId + " class='voteUpButtonDisabled' src='styles/images/upDisabled.png' style='opacity:0.4; display: none;'>" + "<br>" +
                    "<strong id =" + reddit.id + " class='votesNum'>" + reddit.likes + "</strong>" + "<br>" +
-                   "<img  id=" + imgId + " class='voteDownButton' src='image/down.png'>" +
-                   "<img  id=" + imgId + " class='voteDownButtonDisabled' src='image/downDisabled.png' style='opacity:0.4; display: none;'>" +
+                   "<img  id=" + imgId + " class='voteDownButton' src='styles/images/down.png'>" +
+                   "<img  id=" + imgId + " class='voteDownButtonDisabled' src='styles/images/downDisabled.png' style='opacity:0.4; display: none;'>" +
                    "</div>" + "<div class='image'>" + "<a href=" + JSON.stringify(reddit.main_link) + ">" +
                    "<img autoplay='false' src=" + JSON.stringify(reddit.image_link) + "width='70' height='60' class='postimage'>" + "</a>" + "</div>" +
                    "<div class='Content-List'>" +
@@ -445,14 +446,19 @@ clickNotLike();
             } else if (pwd === "") {
                 alert("please enter your password");
             } else {
-                var j = JSON.parse('{"name":"' + username + '","password":"' + pwd + '"}');
+                //var j = JSON.parse('{"name":"' + username + '","password":"' + pwd + '"}');
+                //  var j = {"name": username, "password" : pwd};
+                //  console.log(j);
                 $.ajax({
                     url: "http://localhost:3000/users",
                     type: "GET",
-                    dataType: "json",
-                    data: j,
+                    //dataType: "json",
+                    data:{
+                        "username": username,
+                        "password": pwd
+                    },
                     success: function(result) {
-                      //  console.log(result.length);
+                      console.log(result);
                         if (result.length === 0) {
                             alert("login failed");
                         } else {
@@ -462,7 +468,7 @@ clickNotLike();
                             alert("login Successful");
 							//tempObject to store initial get request value, in order to parse it later, then store in in user object.
                             var tempObject = result[0];
-							//console.log(result[0]);
+			      console.log(result[0]);
                             user.id = tempObject.id;
                             user.userName = tempObject.name;
 							//console.log(tempObject.likes);
@@ -511,6 +517,7 @@ clickNotLike();
             if (username === "" || pass === "" || confirm === "") {
                 alert("please enter the values !!!!");
             } else if (pass !== confirm) {
+
                 alert("password not matching");
             } else {
 				like=[],notLike=[];
@@ -522,17 +529,18 @@ clickNotLike();
                     data: j,
                     url: "http://localhost:3000/users",
                     dataType: "json",
-                    success: function() {
+                    success: function(res) {
+                        console.log("res:");
+                        console.log(res);
                         alert("Registered successfully");
                         document.getElementById("reguser").value = "";
                         document.getElementById("regpass").value = "";
                         document.getElementById("confirmpass").value = "";
                         $('#modal3').closeModal();
-					$.get("http://localhost:3000/users/", function(data){
-            console.log(data);
-						var length = data.length;
 
-						    sessionStorage.setItem('id', length);
+			var length = res.size;
+
+			    sessionStorage.setItem('id', length);
                             sessionStorage.setItem('user', username);
                             sessionStorage.setItem('password', pass);
                             sessionStorage.setItem('like',like);
@@ -541,7 +549,6 @@ clickNotLike();
                            console.log(sessionStorage);
 							location.reload(true);
 
-					});
 
 				},
                     failure: function(errMsg) {
@@ -740,8 +747,9 @@ clickNotLike();
                             $.post("http://localhost:3000/reddit", {
                                 "link_title": $("#input1").val(),
                                 "main_link": $("#input2").val(),
-                                "image_link": "image/noimage.jpg",
+                                "image_link": "styles/images/noimage.jpg",
                                 "likes": 0,
+                                "username": username,
                                 "post_time": date
                             }, function() {
                                 myfunction();
@@ -760,6 +768,7 @@ clickNotLike();
                                 "image":1,
                                 "video":0,
                                 "likes": 0,
+                                "username": username,
                                 "post_time": date
                             }, function() {
                                 myfunction();
@@ -791,6 +800,7 @@ clickNotLike();
                                 "image":0,
                                 "video":1,
                                 "likes": 0,
+                                "username": username,
                                 "post_time": date
                             }, function() {
                                 myfunction();
