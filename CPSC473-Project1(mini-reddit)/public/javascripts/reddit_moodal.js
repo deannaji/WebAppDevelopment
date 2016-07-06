@@ -16,7 +16,6 @@ var main = function() {
     $("#loginTopNav").show();
 
     $.get("http://localhost:3000/reddit", function(getData) {
-        console.log(getData);
        $("div.postsContainer").empty();
 			 getData.forEach(function(reddit) {
 				var imgId = reddit.id;
@@ -37,10 +36,8 @@ var main = function() {
                     "<p class='share'> share" + "</p>" + "</div>" + "</a>" + "<div id=" + reddit.id + " class='imageDivLink' ></div>" +
                     "<div id=" + reddit.id + " class='contentDivImg'></div>" + "</div>";
                 $(postsList).appendTo('div.postsContainer');
-                //$("#" + reddit.id + ".votesNum").text(reddit.likes);
 
-                if (reddit.image_link != "styles/images/noimage.jpg") {
-                    // alert(reddit.id);
+                if (reddit.image_link !== "styles/images/noimage.jpg") {
                     $("#" + reddit.id + ".imageDivLink").html("<i class='material-icons thumbdown'>play_circle_filled</i>");
                 }
 
@@ -68,12 +65,10 @@ var main = function() {
                 a = sessionStorage.getItem('like');
                 b = sessionStorage.getItem('notLike');
 
-        console.log(sessionStorage);
-       console.log("....");
-        console.log(a);
+
         x= a.replace(/^,|,$/g,'');
         y= b.replace(/^,|,$/g,'');
-        //console.log(y);
+
                             $("#user").text("Welcome, "+username);//adding the username to the header nav bar.
                             $("#logoutTopNav").show();
                             $("#loginTopNav").hide();
@@ -82,10 +77,9 @@ var main = function() {
                 like=x.split(',');
 
 
-                 console.log(like);
         //check if the array is empty or not--karthik
                 like.forEach(function(element) {
-          if(element!=""){
+          if(element!==""){
                     $("#" + element + ".voteUpButton").hide();
                     $("#" + element + ".voteUpButtonDisabled").show();
           }});
@@ -96,7 +90,7 @@ var main = function() {
 
                  //check if the array is empty or not--karthik
                 notLike.forEach(function(element) {
-          if(element!=""){
+          if(element!==""){
                     $("#" + element + ".voteDownButton").hide();
                     $("#" + element + ".voteDownButtonDisabled").show();
         } });
@@ -105,7 +99,6 @@ var main = function() {
 
             function clickLike(){
                   $("img.voteUpButton").on("click", function() {
-                    console.log("Like!");
                       var $imgId = this.id,
                           main_link, link_title,post_time,postingUser,image_link, result = $("#" + this.id + ".votesNum").text();
 
@@ -118,13 +111,9 @@ var main = function() {
                               if (like[0] ===NaN || like[0]===null || like[0]===""){
                               like.shift(1);
                             }
-                               console.log(like);
                               var dt1 = JSON.stringify(like);
                               var dt2 = JSON.stringify(notLike);
 
-            //var result = test.slice(1,-1);
-                              //console.log(dt1);
-                              console.log(this.id);
                               $.ajax({
                                   type: "PUT",
                                   url: "http://localhost:3000/users/",
@@ -152,7 +141,6 @@ var main = function() {
                             }
                               var dt1 = JSON.stringify(like);
                               var dt2 = JSON.stringify(notLike);
-                                  console.log("like"+like);
                               $.ajax({
                                   type: "PUT",
                                   url: "http://localhost:3000/users/",
@@ -181,8 +169,7 @@ var main = function() {
                           image_link = getData[this.id - 1].image_link;
                           post_time= getData[this.id - 1].post_time;
                           postingUser= getData[this.id - 1].username;
-                         console.log(post_time);
-                         console.log(postingUser);
+
                          $.ajax({
                               type: "PUT",
                               url: "http://localhost:3000/reddit/",
@@ -222,7 +209,7 @@ var main = function() {
                           var dt2 = JSON.stringify(notLike);
                           $.ajax({
                               type: "PUT",
-                              url: "http://localhost:3000/users/" + user.id,
+                              url: "http://localhost:3000/users/",
                               data: {
                                   "id": user.id,
                                   "name": user.userName,
@@ -245,7 +232,7 @@ var main = function() {
   						            var dt2 = JSON.stringify(notLike);
                           $.ajax({
                               type: "PUT",
-                              url: "http://localhost:3000/users/" + user.id,
+                              url: "http://localhost:3000/users/",
                               data: {
                                   "id": user.id,
                                   "name": user.userName,
@@ -272,7 +259,7 @@ var main = function() {
                       post_time= getData[this.id - 1].post_time;
                       postingUser= getData[this.id - 1].username;
                       $.ajax({
-                          type: "POST",
+                          type: "PUT",
                           url: "http://localhost:3000/reddit/",
                           data: {
                               "id": $imgId,
@@ -303,8 +290,7 @@ $(".button-collapse").sideNav();
 
 //Newest tab click event:
           $("ul.tabs li:nth-child(1) a").on("click",function(){
-            console.log(username);
-            console.log(like);
+
                var newest=getData;
                $('div.postsContainer').empty();
                newest.forEach(function(reddit){
@@ -328,12 +314,12 @@ $(".button-collapse").sideNav();
                  $(postsList).prependTo('div.postsContainer');
                });
                like.forEach(function(element) {
-                  if(element!=""){
+                  if(element!==""){
                      $("#" + element + ".voteUpButton").hide();
                      $("#" + element + ".voteUpButtonDisabled").show();
                }});
                notLike.forEach(function(element) {
-                 if(element!=""){
+                 if(element!==""){
                    $("#" + element + ".voteDownButton").hide();
                    $("#" + element + ".voteDownButtonDisabled").show();
                } });
@@ -366,12 +352,12 @@ $(".button-collapse").sideNav();
                $(postsList).appendTo('div.postsContainer');
                });
                like.forEach(function(element) {
-                  if(element!=""){
+                  if(element!==""){
                      $("#" + element + ".voteUpButton").hide();
                      $("#" + element + ".voteUpButtonDisabled").show();
                }});
                notLike.forEach(function(element) {
-                 if(element!=""){
+                 if(element!==""){
                    $("#" + element + ".voteDownButton").hide();
                    $("#" + element + ".voteDownButtonDisabled").show();
                } });
@@ -407,12 +393,12 @@ $(".button-collapse").sideNav();
                 $(postsList).appendTo('div.postsContainer');
                 })
                 like.forEach(function(element) {
-                   if(element!=""){
+                   if(element!==""){
                       $("#" + element + ".voteUpButton").hide();
                       $("#" + element + ".voteUpButtonDisabled").show();
                 }});
                 notLike.forEach(function(element) {
-                  if(element!=""){
+                  if(element!==""){
                     $("#" + element + ".voteDownButton").hide();
                     $("#" + element + ".voteDownButtonDisabled").show();
                 } });
@@ -424,41 +410,31 @@ $(".button-collapse").sideNav();
 clickLike();
 clickNotLike();
 
-            //pages(getData.length);
         }); //end of $.get function
 
     } //end of my function
 
-    /*$(".button-collapse").sideNav();
-        $('.modal-trigger').leanModal();
-        $('.tooltipped').tooltip({
-            delay: 50
-        });*/
+
 
     function login() {
         $("#login").on("click", function() {
             //initilaizing user object to zero.
             username = document.getElementById("username").value;
             pwd = document.getElementById("password").value;
-            //console.log(username);
             if (username === "") {
                 alert("please enter your username");
             } else if (pwd === "") {
                 alert("please enter your password");
             } else {
-                //var j = JSON.parse('{"name":"' + username + '","password":"' + pwd + '"}');
-                //  var j = {"name": username, "password" : pwd};
-                //  console.log(j);
+
                 $.ajax({
                     url: "http://localhost:3000/users",
                     type: "GET",
-                    //dataType: "json",
                     data:{
                         "username": username,
                         "password": pwd
                     },
                     success: function(result) {
-                      console.log(result);
                         if (result.length === 0) {
                             alert("login failed");
                         } else {
@@ -468,14 +444,11 @@ clickNotLike();
                             alert("login Successful");
 							//tempObject to store initial get request value, in order to parse it later, then store in in user object.
                             var tempObject = result[0];
-			      console.log(result[0]);
                             user.id = tempObject.id;
                             user.userName = tempObject.name;
-							//console.log(tempObject.likes);
                             like = JSON.parse(tempObject.likes);
                             notLike = JSON.parse(tempObject.notLikes);
-                            //console.log(like);
-                            //console.log(notLike);
+
                             sessionStorage.setItem('id', user.id);
                             sessionStorage.setItem('user', username);
                             sessionStorage.setItem('password', pwd);
@@ -530,8 +503,7 @@ clickNotLike();
                     url: "http://localhost:3000/users",
                     dataType: "json",
                     success: function(res) {
-                        console.log("res:");
-                        console.log(res);
+
                         alert("Registered successfully");
                         document.getElementById("reguser").value = "";
                         document.getElementById("regpass").value = "";
@@ -546,7 +518,6 @@ clickNotLike();
                             sessionStorage.setItem('like',like);
                             sessionStorage.setItem('notLike', notLike);
                             var x= sessionStorage.getItem('like');
-                           console.log(sessionStorage);
 							location.reload(true);
 
 
@@ -569,7 +540,6 @@ clickNotLike();
             notLike = [];
             sessionStorage.clear();
             location.reload(true);
-            console.log("logged out!\n");
         });
     } //end of logout function
 
@@ -679,7 +649,7 @@ clickNotLike();
         $("#postbutton").click(function(element) {
 
 
-                if ($("#input1").val() === "" || $("#input2").val() == "" || $("#input3").val() == "") {
+                if ($("#input1").val() === "" || $("#input2").val() === "" || $("#input3").val() === "") {
                     element.preventDefault();
                     setTimeout(fade_out, 5000);
                     $("#spanbutton").css({
@@ -689,52 +659,7 @@ clickNotLike();
                         function fade_out() {
                         $("#spanbutton").fadeOut().empty();
                     }
-                } /*else if ($("#input1").val() !== "" || $("#input2").val() !== "" || $("#input3").val() !== "") {
-                    jsondata.forEach(function(reddit1) {
-                        if ((reddit1.link_title === $("#input1").val())) {
-                            alert(JSON.stringify(reddit1.main_link)+"\\\\   "+$("#input2").val() );
-                            console.log(reddit1.main_link);
-                            element.preventDefault();
-                            setTimeout(fade_out2, 5000);
-                            $("#spanbutton").css({
-                        "visibility": "visible",
-                        "display": "inline"
-                        }).text("Post Title already exists in the site");
-                            function fade_out2() {
-                        $("#spanbutton").fadeOut().empty();
-                        $("#postform")[0].reset();
-                            }
-                        }
-                        else if(JSON.stringify(reddit1.main_link) === $("#input2").val()){
-                            alert("in second if");
-                            element.preventDefault();
-                            setTimeout(fade_out4, 5000);
-                            $("#spanbutton").css({
-                        "visibility": "visible",
-                        "display": "inline"
-                    }).text("URL already exists in the site");
-                            function fade_out4() {
-                        $("#spanbutton").fadeOut().empty();
-                        $("#postform")[0].reset();
-                            }
-                        }
-                        else if($("#input3").val()!==undefined){
-                            if(JSON.stringify(reddit1.image_link) === $("#input3").val()){
-                            alert($("#input3").val());
-                            element.preventDefault();
-                            setTimeout(fade_out3, 5000);
-                            $("#spanbutton").css({
-                        "visibility": "visible",
-                        "display": "inline"
-                    }).text("Image/Video URL already exists in the site");
-                            function fade_out3() {
-                        $("#spanbutton").fadeOut().empty();
-                        $("#postform")[0].reset();
-                            }
-                        }
-                        }
-                    });
-              } */
+                }
               else
               {
                 if (form.valid() === true) {
@@ -848,7 +773,6 @@ clickNotLike();
         var numofitems_page = 10,
             numofpages = Math.ceil(totalnumofitems / numofitems_page),
             pagenumbers;
-        //  $("div.postsContainer").children().hide();
             $("ul.pagination").empty();
         for (var i = 1; i <= numofpages; i++) {
             pagenumbers = "<li class='waves-effect'>" + i + "</li>";

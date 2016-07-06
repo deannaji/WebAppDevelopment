@@ -41,6 +41,7 @@ float :right;
 }
 #search{
     padding-left: 10px;
+    padding-right:5px;
     color: white;
     font-color:black;
 }
