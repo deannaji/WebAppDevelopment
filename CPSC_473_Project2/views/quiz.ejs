@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
+    </script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js">
+    </script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css"> 
+    <script type="text/javascript" src='../javascripts/quiz.js'></script>
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+            <span class="icon-bar">
+            </span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <span>Quizzup
+            </span>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+<div id="myQuiz">
+<h2 id='label'>Your Score</h2>
+<div class='score'></div>
+<h2 id='label'>Opponent Score</h2>
+<div class='score2'></div>
+<div class='intro active'>
+  <h2>Welcome</h2>
+  <p>Click begin to test your knowledge</p>
+  <p class='btn' >Begin</p>
+</div>
+
+ <% values.forEach(function(value){ %>
+ <% if(value.quizzname==quizname){ %>
+<% value.questionsData.forEach(function(question){%>
+ <div class="question unanswered" id='<%=question.id%>' </p>
+  <p class='txt'><%=question.questions%></p>
+  <div class='answer' id='<%=question.id%>' ><%=question.answer%></div>
+  <% for(var i=0;i<4;i++){%>
+  <p class='ans'><%=question.choices[i]%></p>
+  <% }%>
+ 
+</div><br>  
+<% })%> 
+<% } %>
+    <% }) %>
+    
+      <div class="results">
+          <h3>Results</h3>
+          <p></p>
+          <div class='btn' onclick="location.href='/'"> Continue</div>
+      </div>
+</div>
+  
+      
+  </body>
+</html>
